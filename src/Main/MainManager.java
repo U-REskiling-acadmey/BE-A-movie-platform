@@ -2,6 +2,8 @@ package Main;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MainManager extends JFrame{
     // Frame은 자바 GUI의 모든 구성요소를 담는 컨테이너로 우리가 흔히 보는 프로그램 창 자체를 의미합니다.
@@ -24,6 +26,17 @@ public class MainManager extends JFrame{
         label.setHorizontalAlignment(SwingConstants.CENTER); // 수평 가운데 정렬
         label.setVerticalAlignment(SwingConstants.CENTER); // 수직 가운데 정렬
         pane.add(label, BorderLayout.CENTER); // 중앙에 레이블 추가
+
+        JButton button = new JButton("버튼 테스트");
+        pane.add(button, BorderLayout.SOUTH); // 남쪽에 버튼 추가
+        button.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               // 한번 누르면 MainManager이 꺼질 수 있도록 만듬
+               dispose();
+               new NextScrean(); //버튼을 누르면 NextScrean로 가게 됨
+           }
+        });
 
         setVisible(true); // 화면에 프레임 출력
 
