@@ -27,3 +27,6 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+# 제외할 디렉토리나 파일 추가
+/src/config/config.properties
