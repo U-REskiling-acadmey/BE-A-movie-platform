@@ -15,12 +15,6 @@ public class NextScrean extends JFrame {
         JLabel nextLabel = new JLabel("This is the next screen", SwingConstants.CENTER);
         getContentPane().add(nextLabel);
 
-        //DAO 객체 생성
-        dao = new MovieDao();
-
-        //DB 연결 상태 확인
-        boolean isConnected = dao.checkDBConnection();
-
         setVisible(true);
     }
 

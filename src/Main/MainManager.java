@@ -1,14 +1,21 @@
 package Main;
 
+import GUI.LoginGUI;
+import GUI.RegisterGUI;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * MainManager 클래스는 애플리케이션의 메인 화면을 설정합니다.
+ * 여기서 사용자는 회원가입 또는 로그인을 선택할 수 있습니다.
+ */
 public class MainManager extends JFrame{
     // Frame은 자바 GUI의 모든 구성요소를 담는 컨테이너로 우리가 흔히 보는 프로그램 창 자체를 의미합니다.
     public MainManager() {
-        setTitle("Frame Setting 500 x 300 프레임 만들기"); // 프레임 제목 설정
+        setTitle("좌석 예약 프로젝트"); // 프레임 제목 설정
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 300); // 프레임 크기 설정
 
@@ -22,21 +29,42 @@ public class MainManager extends JFrame{
         // AbsoluteLayout : 컴포넌트를 어느 위치에든 좌표를 정해서 붙일 수 있습니다. [AbsoluteLayout 설정 contentPane.setLayout(null)]
         pane.setLayout(new BorderLayout());
 
-        JLabel label = new JLabel("좌석 예약 프로젝트",SwingConstants.CENTER); // 레이블 생성
-        label.setHorizontalAlignment(SwingConstants.CENTER); // 수평 가운데 정렬
-        label.setVerticalAlignment(SwingConstants.CENTER); // 수직 가운데 정렬
-        pane.add(label, BorderLayout.CENTER); // 중앙에 레이블 추가
+        // 메인 레이블 설정
+        JLabel label = new JLabel("좌석 예약 프로젝트", SwingConstants.CENTER);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        label.setVerticalAlignment(SwingConstants.CENTER);
+        pane.add(label, BorderLayout.CENTER);
 
-        JButton button = new JButton("버튼 테스트");
-        pane.add(button, BorderLayout.SOUTH); // 남쪽에 버튼 추가
-        button.addActionListener(new ActionListener() {
-           @Override
-           public void actionPerformed(ActionEvent e) {
-               // 한번 누르면 MainManager이 꺼질 수 있도록 만듬
-               dispose();
-               new NextScrean(); //버튼을 누르면 NextScrean로 가게 됨
-           }
+        // 버튼 패널 설정
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout());
+
+        // 회원가입 버튼 설정
+        JButton registerButton = new JButton("회원가입");
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // 메인 화면 닫기
+                new RegisterGUI(); // 회원가입 화면 열기
+            }
         });
+
+        // 로그인 버튼 설정
+        JButton loginButton = new JButton("로그인");
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // 메인 화면 닫기
+                new LoginGUI(); // 로그인 화면 열기
+            }
+        });
+
+        // 버튼 패널에 버튼 추가
+        buttonPanel.add(registerButton);
+        buttonPanel.add(loginButton);
+
+        // 버튼 패널을 프레임의 남쪽에 추가
+        pane.add(buttonPanel, BorderLayout.SOUTH);
 
         setVisible(true); // 화면에 프레임 출력
 
