@@ -21,7 +21,7 @@ public class MovieDAO {
 
     public List<MovieDTO> getMoviesForDate(String date) {
         List<MovieDTO> movies = new ArrayList<>();
-        String sql = "SELECT DISTINCT m.title, m.price, m.age_limit, m.running_time " +
+        String sql = "SELECT DISTINCT m.id, m.title, m.price, m.age_limit, m.running_time " +
                 "FROM movie m " +
                 "JOIN screen s ON m.id = s.movie_id " +
                 "WHERE ? BETWEEN s.start_date AND s.end_date";
@@ -35,6 +35,7 @@ public class MovieDAO {
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     MovieDTO movie = new MovieDTO(
+                            rs.getInt("id"),
                             rs.getString("title"),
                             rs.getInt("price"),
                             rs.getInt("age_limit"),
