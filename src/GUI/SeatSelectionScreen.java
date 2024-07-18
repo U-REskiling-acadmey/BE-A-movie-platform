@@ -2,8 +2,13 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import dao.SeatReservationDAO;
+import dto.SeatReservationDTO;
 
 public class SeatSelectionScreen extends JFrame {
     private String username;
@@ -48,15 +53,20 @@ public class SeatSelectionScreen extends JFrame {
         JScrollPane scrollPane = new JScrollPane(seatPanel);
         add(scrollPane, BorderLayout.CENTER);
 
+        // 버튼 패널
+        JPanel buttonPanel = new JPanel(new GridLayout(1, 2));
+
         // 예매하기 버튼
         JButton reserveButton = new JButton("예매하기");
         reserveButton.addActionListener(e -> reserveSeats());
-        add(reserveButton, BorderLayout.SOUTH);
+        buttonPanel.add(reserveButton);
 
         // 이전으로 버튼
         JButton backButton = new JButton("이전으로");
         backButton.addActionListener(e -> dispose());
-        add(backButton, BorderLayout.SOUTH);
+        buttonPanel.add(backButton);
+
+        add(buttonPanel, BorderLayout.SOUTH);
 
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -86,7 +96,37 @@ public class SeatSelectionScreen extends JFrame {
             return;
         }
 
-        JOptionPane.showMessageDialog(this, "예매가 완료되었습니다.");
-        dispose();
+        String seats = String.join(",", selectedSeats);
+        int price = selectedCount * 10000; // Assuming each ticket costs 10000 won
+
+        // 시간을 "HH:mm:ss" 형식으로 포맷팅
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String currentTime = LocalTime.now().format(timeFormatter);
+
+        SeatReservationDTO reservation = new SeatReservationDTO(
+                username,
+                movieId,
+                theaterId,
+                LocalDate.now().toString(),
+                currentTime,
+                selectedCount,
+                seats,
+                price
+        );
+
+        SeatReservationDAO reservationDAO = new SeatReservationDAO();
+        boolean success = reservationDAO.reserveSeats(reservation);
+        reservationDAO.close();
+
+        if (success) {
+            JOptionPane.showMessageDialog(this, "예매가 완료되었습니다.");
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "예매에 실패했습니다.");
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new SeatSelectionScreen("testuser", 1, 1, "2024-07-18", "18:00"));
     }
 }
