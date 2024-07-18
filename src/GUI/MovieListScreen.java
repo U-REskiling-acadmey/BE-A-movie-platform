@@ -78,6 +78,12 @@ public class MovieListScreen extends JFrame {
             moviePanel.add(ageLabel, BorderLayout.WEST);
             moviePanel.add(infoPanel, BorderLayout.CENTER);
 
+            moviePanel.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    new TheaterListScreen(username, selectedDate, movie);
+                }
+            });
+
             movieListPanel.add(moviePanel);
             movieListPanel.add(Box.createRigidArea(new Dimension(0, 5))); // 항목 사이 간격
         }
