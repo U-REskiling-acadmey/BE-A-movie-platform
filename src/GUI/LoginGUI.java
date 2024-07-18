@@ -1,7 +1,7 @@
 package GUI;
 
 import Main.MainManager;
-import Main.NextScrean;
+import Main.NextScreen;
 import dao.UserDAO;
 
 import javax.swing.*;
@@ -48,7 +48,7 @@ public class LoginGUI extends JFrame {
                 if (userDao.login(username, password)) {
                     JOptionPane.showMessageDialog(null, "로그인 성공!");
                     dispose();
-                    new NextScrean(username); // 로그인 성공 시 메인 화면으로 이동
+                    new NextScreen(username); // 로그인 성공 시 메인 화면으로 이동
                 } else {
                     JOptionPane.showMessageDialog(null, "로그인 실패!");
                 }
