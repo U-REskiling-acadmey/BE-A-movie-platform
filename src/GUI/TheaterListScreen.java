@@ -74,8 +74,8 @@ public class TheaterListScreen extends JFrame {
 
             JButton selectButton = new JButton("선택");
             selectButton.addActionListener(e -> {
-                // 여기에 예매 로직 추가
-                JOptionPane.showMessageDialog(this, "예매가 완료되었습니다.");
+                new SeatSelectionScreen(username, selectedMovie.getId(), theater.getId(), selectedDate, theater.getShowTime());
+                dispose();
             });
 
             theaterPanel.add(selectButton, BorderLayout.SOUTH);
