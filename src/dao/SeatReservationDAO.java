@@ -5,6 +5,7 @@ import dto.SeatReservationDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SeatReservationDAO {
@@ -15,6 +16,12 @@ public class SeatReservationDAO {
     }
 
     public boolean reserveSeats(SeatReservationDTO reservation) {
+        // 먼저 place_id의 유효성을 직접 검사
+        if (!isValidPlaceId(reservation.getPlaceId())) {
+            System.out.println("Invalid place_id: " + reservation.getPlaceId());
+            return false;
+        }
+
         String query = "INSERT INTO reserve (username, movie_id, place_id, reserve_date, reserve_time, reserve_cnt, seat, price) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
             preparedStatement.setString(1, reservation.getUsername());
@@ -29,12 +36,26 @@ public class SeatReservationDAO {
             int result = preparedStatement.executeUpdate();
             return result > 0;
         } catch (SQLException ex) {
-            System.out.println("Error inserting reservation: " + ex.getMessage());
             ex.printStackTrace();
             return false;
         }
     }
 
+    private boolean isValidPlaceId(int placeId) {
+        String query = "SELECT COUNT(*) FROM place WHERE id = ?";
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+            preparedStatement.setInt(1, placeId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error checking place_id: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+        return false;
+    }
 
     public void close() {
         DBConnect.closeConnnection();
