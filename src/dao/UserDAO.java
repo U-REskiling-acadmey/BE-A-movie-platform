@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static common.DBConnect.getConnection;
+
 /*
   * UserDAO 클래스는 데이터베이스와 상호작용하여 사용자 데이터를 처리합니다.
  */
@@ -16,7 +18,7 @@ public class UserDAO {
     private Connection conn;
 
     public UserDAO() {
-        conn = DBConnect.getConnection();
+        conn = getConnection();
     }
 
     // 회원가입 메서드
@@ -49,20 +51,43 @@ public class UserDAO {
         }
     }
 
-    // 사용자 이름 가져오기 메서드
-    public String getUsername(String username) {
-        String sql = "SELECT username FROM users WHERE username = ?";
-        try(PreparedStatement ps = conn.prepareStatement(sql)){
-            ps.setString(1, username);
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                return rs.getString("username");
+    // 사용자 프로필 가져오기 메서드
+    public UserDTO getUserByUsername(String username) {
+        UserDTO user = null;
+        String sql = "SELECT * FROM users WHERE username = ?";
+
+        System.out.println("Attempting to fetch user: " + username); // 디버깅용 로그
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, username);
+            System.out.println("Executing SQL: " + pstmt.toString()); // SQL 쿼리 로깅
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    System.out.println("User found in database"); // 사용자 찾음 로그
+                    user = new UserDTO(
+                            rs.getInt("id"),
+                            rs.getString("username"),
+                            rs.getString("password"),
+                            rs.getInt("age")
+                    );
+                    System.out.println("User details: " + user); // 생성된 객체 정보 출력
+                } else {
+                    System.out.println("No user found with username: " + username);
+                }
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("SQL Error: " + e.getMessage());
         }
-        return null; // 사용자가 없는 경우 null 반환
+
+        return user;
     }
+
+
+
 
     public void close(){
         DBConnect.closeConnnection();
