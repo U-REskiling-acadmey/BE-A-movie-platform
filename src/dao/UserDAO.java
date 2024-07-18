@@ -51,44 +51,42 @@ public class UserDAO {
         }
     }
 
-    // 사용자 이름 가져오기 메서드
-    public String getUsername(String username) {
-        String sql = "SELECT username FROM users WHERE username = ?";
-        try(PreparedStatement ps = conn.prepareStatement(sql)){
-            ps.setString(1, username);
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                return rs.getString("username");
-            }
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return null; // 사용자가 없는 경우 null 반환
-    }
-
     // 사용자 프로필 가져오기 메서드
     public UserDTO getUserByUsername(String username) {
         UserDTO user = null;
         String sql = "SELECT * FROM users WHERE username = ?";
+
+        System.out.println("Attempting to fetch user: " + username); // 디버깅용 로그
+
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
             pstmt.setString(1, username);
+            System.out.println("Executing SQL: " + pstmt.toString()); // SQL 쿼리 로깅
+
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    // 데이터베이스에서 가져온 정보로 User 객체 생성
+                    System.out.println("User found in database"); // 사용자 찾음 로그
                     user = new UserDTO(
                             rs.getInt("id"),
                             rs.getString("username"),
                             rs.getString("password"),
                             rs.getInt("age")
                     );
+                    System.out.println("User details: " + user); // 생성된 객체 정보 출력
+                } else {
+                    System.out.println("No user found with username: " + username);
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // 실제 애플리케이션에서는 로깅을 사용하는 것이 좋습니다.
+            e.printStackTrace();
+            System.out.println("SQL Error: " + e.getMessage());
         }
+
         return user;
     }
+
+
 
 
     public void close(){

@@ -39,7 +39,7 @@ public class ShowInfoScreen extends JFrame {
         mainPanel.add(Box.createRigidArea(new Dimension(0, 10))); // 이미지와 텍스트 사이 간격
 
         // 사용자 정보 표시
-        UserDTO user = new UserDTO(); // 데이터베이스에서 사용자 정보 가져오기
+        UserDTO user = getUserInfo(); // 데이터베이스에서 사용자 정보 가져오기
         String[] labels = {"유저","나이"};
         String[] values = {user.getUsername(), String.valueOf(user.getAge())};
 
@@ -72,7 +72,7 @@ public class ShowInfoScreen extends JFrame {
     }
 
     // 데이터베이스에서 사용자 정보를 가져오는 메소드
-    private String getUserInfo() {
-        return userDAO.getUsername(username);
+    private UserDTO getUserInfo() {
+        return userDAO.getUserByUsername(username);
     }
 }
