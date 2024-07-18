@@ -8,6 +8,7 @@ import dao.UserDAO;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class NextScreen extends JFrame {
     private UserDAO userDAO;
@@ -29,10 +30,10 @@ public class NextScreen extends JFrame {
         JPanel buttonPanel = new JPanel(new GridLayout(2, 2, 10, 10));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        JButton dateReservationBtn = createButton("영화별 예매", new DateReservationScreen());
-        JButton theaterReservationBtn = createButton("상영관별 예매", new TheaterReservationScreen());
-        JButton myReservationBtn = createButton("예매 확인", new MyReservationScreen());
-        JButton showInfoBtn = createButton("내 정보 보기", new ShowInfoScreen(username));
+        JButton dateReservationBtn = createButton("영화별 예매", e -> new DateReservationScreen(username).setVisible(true));
+        JButton theaterReservationBtn = createButton("상영관별 예매", e -> new TheaterReservationScreen().setVisible(true));
+        JButton myReservationBtn = createButton("예매 확인", e -> new MyReservationScreen().setVisible(true));
+        JButton showInfoBtn = createButton("내 정보 보기", e -> new ShowInfoScreen(username).setVisible(true));
 
         buttonPanel.add(dateReservationBtn);
         buttonPanel.add(theaterReservationBtn);
@@ -52,14 +53,11 @@ public class NextScreen extends JFrame {
         setVisible(true);
     }
 
-    private JButton createButton(String text, JFrame nextScreen) {
+    private JButton createButton(String text, ActionListener action) {
         JButton button = new JButton(text);
         button.setBackground(new Color(65, 105, 225));
         button.setForeground(Color.BLACK);  // 글자색을 검은색으로 변경
-        button.addActionListener(e -> {
-            nextScreen.setVisible(true);
-            this.setVisible(false);
-        });
+        button.addActionListener(action);
         return button;
     }
 
