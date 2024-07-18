@@ -29,11 +29,29 @@ public class MainManager extends JFrame{
         // AbsoluteLayout : 컴포넌트를 어느 위치에든 좌표를 정해서 붙일 수 있습니다. [AbsoluteLayout 설정 contentPane.setLayout(null)]
         pane.setLayout(new BorderLayout());
 
+        // 이미지 불러오기
+        ImageIcon icon = new ImageIcon("./src/Main/resources/images/main.png");
+        Image originalImage = icon.getImage();
+        Image scaledImage = originalImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        JLabel imagelabel = new JLabel(scaledIcon);
+        imagelabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         // 메인 레이블 설정
         JLabel label = new JLabel("좌석 예약 프로젝트", SwingConstants.CENTER);
-        label.setHorizontalAlignment(SwingConstants.CENTER);
-        label.setVerticalAlignment(SwingConstants.CENTER);
-        pane.add(label, BorderLayout.CENTER);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // 이미지와 레이블을 포함하는 패널 설정
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+        centerPanel.add(Box.createVerticalGlue()); // 상단 여백 추가
+        centerPanel.add(imagelabel);
+        centerPanel.add(label);
+        centerPanel.add(Box.createVerticalGlue()); // 하단 여백 추가
+
+        // 패널을 프레임의 중앙에 추가
+        pane.add(centerPanel, BorderLayout.CENTER);
+
 
         // 버튼 패널 설정
         JPanel buttonPanel = new JPanel();
