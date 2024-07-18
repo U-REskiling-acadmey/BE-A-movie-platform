@@ -1,26 +1,21 @@
 package Main;
 
-import dao.MovieDao;
+import dao.UserDAO;
 
 import javax.swing.*;
 
 public class NextScrean extends JFrame {
-    private MovieDao dao;
+    private UserDAO userdao;
 
-    public NextScrean() {
-        setTitle("Next Screen");
+    public NextScrean(String username) {
+        setTitle("Next Screen - " + username);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 300);
 
         JLabel nextLabel = new JLabel("This is the next screen", SwingConstants.CENTER);
         getContentPane().add(nextLabel);
 
-        //DAO 객체 생성
-        dao = new MovieDao();
-
-        //DB 연결 상태 확인
-        boolean isConnected = dao.checkDBConnection();
-
+        setLocationRelativeTo(null); // 화면 중앙 생성
         setVisible(true);
     }
 
@@ -28,6 +23,6 @@ public class NextScrean extends JFrame {
     @Override
     public void dispose(){
         super.dispose();
-        dao.close();
+        userdao.close();
     }
 }
