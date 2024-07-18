@@ -19,7 +19,7 @@ public class SeatReservationDAO {
         try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
             preparedStatement.setString(1, reservation.getUsername());
             preparedStatement.setInt(2, reservation.getMovieId());
-            preparedStatement.setInt(3, reservation.getPlaceId()); // 여기서 place_id를 설정해야 함
+            preparedStatement.setInt(3, reservation.getPlaceId());
             preparedStatement.setDate(4, java.sql.Date.valueOf(reservation.getReserveDate()));
             preparedStatement.setTime(5, java.sql.Time.valueOf(reservation.getReserveTime()));
             preparedStatement.setInt(6, reservation.getReserveCnt());
@@ -29,10 +29,12 @@ public class SeatReservationDAO {
             int result = preparedStatement.executeUpdate();
             return result > 0;
         } catch (SQLException ex) {
+            System.out.println("Error inserting reservation: " + ex.getMessage());
             ex.printStackTrace();
             return false;
         }
     }
+
 
     public void close() {
         DBConnect.closeConnnection();

@@ -1,5 +1,6 @@
 package GUI;
 
+import Main.NextScreen;
 import dao.ReservationDAO;
 import dto.ReservationDTO;
 
@@ -47,7 +48,7 @@ public class ReservationDetailScreen extends JFrame {
     private void goBack() {
         // Dispose the current frame and open MyReservationScreen
         dispose();
-        new MyReservationScreen(username).setVisible(true);
+        new NextScreen(username);
     }
 
     private void cancelReservation() {
