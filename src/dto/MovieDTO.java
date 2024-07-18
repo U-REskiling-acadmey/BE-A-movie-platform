@@ -1,16 +1,26 @@
 package dto;
 
 public class MovieDTO {
+    private int id;
     private String title;
     private int price;
     private int ageLimit;
     private int runningTime;
 
-    public MovieDTO(String title, int price, int ageLimit, int runningTime) {
+    public MovieDTO(int id,String title, int price, int ageLimit, int runningTime) {
+        this.id = id;
         this.title = title;
         this.price = price;
         this.ageLimit = ageLimit;
         this.runningTime = runningTime;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
