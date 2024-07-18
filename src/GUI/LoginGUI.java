@@ -42,7 +42,7 @@ public class LoginGUI extends JFrame {
                 if (userDao.login(username, password)) {
                     JOptionPane.showMessageDialog(null, "로그인 성공!");
                     dispose();
-                    new NextScrean(); // 로그인 성공 시 메인 화면으로 이동
+                    new NextScrean(username); // 로그인 성공 시 메인 화면으로 이동
                 } else {
                     JOptionPane.showMessageDialog(null, "로그인 실패!");
                 }

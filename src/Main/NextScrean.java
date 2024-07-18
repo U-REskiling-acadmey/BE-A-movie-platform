@@ -1,14 +1,14 @@
 package Main;
 
-import dao.MovieDao;
+import dao.UserDAO;
 
 import javax.swing.*;
 
 public class NextScrean extends JFrame {
-    private MovieDao dao;
+    private UserDAO userdao;
 
-    public NextScrean() {
-        setTitle("Next Screen");
+    public NextScrean(String username) {
+        setTitle("Next Screen - " + username);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 300);
 
@@ -22,6 +22,6 @@ public class NextScrean extends JFrame {
     @Override
     public void dispose(){
         super.dispose();
-        dao.close();
+        userdao.close();
     }
 }

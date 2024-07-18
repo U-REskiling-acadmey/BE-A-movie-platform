@@ -49,5 +49,23 @@ public class UserDAO {
         }
     }
 
+    // 사용자 이름 가져오기 메서드
+    public String getUsername(String username) {
+        String sql = "SELECT username FROM users WHERE username = ?";
+        try(PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                return rs.getString("username");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null; // 사용자가 없는 경우 null 반환
+    }
+
+    public void close(){
+        DBConnect.closeConnnection();
+    }
 }
 
