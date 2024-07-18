@@ -1,24 +1,16 @@
 package dto;
 
 public class MovieDTO {
-    private int movieId;
     private String title;
+    private int price;
     private int ageLimit;
-    private int runtime;
+    private int runningTime;
 
-    public MovieDTO(int movieId, String title, int ageLimit, int runtime) {
-        this.movieId = movieId;
+    public MovieDTO(String title, int price, int ageLimit, int runningTime) {
         this.title = title;
+        this.price = price;
         this.ageLimit = ageLimit;
-        this.runtime = runtime;
-    }
-
-    public int getMovieId() {
-        return movieId;
-    }
-
-    public void setMovieId(int movieId) {
-        this.movieId = movieId;
+        this.runningTime = runningTime;
     }
 
     public String getTitle() {
@@ -29,6 +21,14 @@ public class MovieDTO {
         this.title = title;
     }
 
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     public int getAgeLimit() {
         return ageLimit;
     }
@@ -37,11 +37,11 @@ public class MovieDTO {
         this.ageLimit = ageLimit;
     }
 
-    public int getRuntime() {
-        return runtime;
+    public int getRunningTime() {
+        return runningTime;
     }
 
-    public void setRuntime(int runtime) {
-        this.runtime = runtime;
+    public void setRunningTime(int runningTime) {
+        this.runningTime = runningTime;
     }
 }

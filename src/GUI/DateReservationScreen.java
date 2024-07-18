@@ -129,8 +129,8 @@ public class DateReservationScreen extends JFrame {
                 dayButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        JOptionPane.showMessageDialog(DateReservationScreen.this,
-                                year + "년 " + (month + 1) + "월 " + e.getActionCommand() + "일 선택됨");
+                        dispose(); // 현재 DateReservationScreen 창 닫기
+                        new MovieListScreen(username, currentDate); // MovieListScreen 열기
                     }
                 });
             } else {
