@@ -36,7 +36,7 @@ public class ShowInfoScreen extends JFrame {
         JLabel profileImage = new JLabel(new ImageIcon(image));
         profileImage.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainPanel.add(profileImage);
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 10))); // 이미지와 텍스트 사이 간격
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 30))); // 이미지와 텍스트 사이 간격
 
         // 사용자 정보 표시
         UserDTO user = getUserInfo(); // 데이터베이스에서 사용자 정보 가져오기
