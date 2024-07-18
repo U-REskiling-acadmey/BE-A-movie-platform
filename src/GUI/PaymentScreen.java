@@ -2,9 +2,9 @@ package GUI;
 
 import javax.swing.*;
 
-public class TheaterReservationScreen extends JFrame {
-    public TheaterReservationScreen() {
-        setTitle("상영관별 예매");
+public class PaymentScreen extends JFrame {
+    public PaymentScreen() {
+        setTitle("결제 하기");
         setSize(300, 200);
 
         // 프로그램 종료 설정 추가

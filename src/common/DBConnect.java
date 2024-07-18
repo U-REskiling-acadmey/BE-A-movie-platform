@@ -15,7 +15,7 @@ public class DBConnect {
     private static Properties prop;
     private static Connection con = null;
     private static String url;
-    private static String username;
+    public static String username;
     private static String password;
 
     // 정적 초기화 블록에서 config.properties 파일을 읽어와서 변수에 할당
