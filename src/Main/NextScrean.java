@@ -15,6 +15,7 @@ public class NextScrean extends JFrame {
         JLabel nextLabel = new JLabel("This is the next screen", SwingConstants.CENTER);
         getContentPane().add(nextLabel);
 
+        setLocationRelativeTo(null); // 화면 중앙 생성
         setVisible(true);
     }
 

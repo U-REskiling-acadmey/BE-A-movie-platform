@@ -1,5 +1,6 @@
 package GUI;
 
+import Main.MainManager;
 import dao.UserDAO;
 import dto.UserDTO;
 
@@ -16,32 +17,38 @@ public class RegisterGUI extends JFrame {
 
     public RegisterGUI() {
         setTitle("회원가입");
-        setSize(300, 200);
+        setSize(300, 200); // Increased size to accommodate the new button
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container pane = getContentPane();
-        pane.setLayout(new GridLayout(5, 2));
+        pane.setLayout(new BorderLayout());
+
+        JPanel inputPanel = new JPanel(new GridLayout(4, 2));
 
         // 사용자명 입력 필드
-        pane.add(new JLabel("Username :"));
+        inputPanel.add(new JLabel("Username :"));
         usernameField = new JTextField();
-        pane.add(usernameField);
+        inputPanel.add(usernameField);
 
         // 비밀번호 입력 필드
-        pane.add(new JLabel("Password :"));
+        inputPanel.add(new JLabel("Password :"));
         passwordField = new JPasswordField();
-        pane.add(passwordField);
+        inputPanel.add(passwordField);
 
         // 비밀번호 확인 입력 필드
-        pane.add(new JLabel("Confirm Password :"));
+        inputPanel.add(new JLabel("Confirm Password :"));
         confirmPasswordField = new JPasswordField();
-        pane.add(confirmPasswordField);
+        inputPanel.add(confirmPasswordField);
 
         // 나이 입력 필드
-        pane.add(new JLabel("age:"));
+        inputPanel.add(new JLabel("Age :"));
         ageField = new JTextField();
-        pane.add(ageField);
+        inputPanel.add(ageField);
 
-        // 회원가입 버튼
+        pane.add(inputPanel, BorderLayout.CENTER);
+
+        // 회원가입 버튼과 돌아가기 버튼을 담을 패널
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
         JButton registerButton = new JButton("회원가입");
         registerButton.addActionListener(new ActionListener() {
             @Override
@@ -80,8 +87,22 @@ public class RegisterGUI extends JFrame {
                 }
             }
         });
-        pane.add(registerButton);
 
+        JButton backButton = new JButton("돌아가기");
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // Close the current window
+                new MainManager(); // Open MainManager
+            }
+        });
+
+        buttonPanel.add(registerButton);
+        buttonPanel.add(backButton);
+
+        pane.add(buttonPanel, BorderLayout.SOUTH);
+
+        setLocationRelativeTo(null); // 화면 중앙 생성
         setVisible(true);
     }
 
