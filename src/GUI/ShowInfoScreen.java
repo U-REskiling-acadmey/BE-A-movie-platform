@@ -38,5 +38,41 @@ public class ShowInfoScreen extends JFrame {
         mainPanel.add(profileImage);
         mainPanel.add(Box.createRigidArea(new Dimension(0, 10))); // 이미지와 텍스트 사이 간격
 
+        // 사용자 정보 표시
+        UserDTO user = new UserDTO(); // 데이터베이스에서 사용자 정보 가져오기
+        String[] labels = {"유저","나이"};
+        String[] values = {user.getUsername(), String.valueOf(user.getAge())};
+
+        // 각 정보를 레이블로 표시
+        for(int i=0; i<labels.length; i++){
+            JPanel infoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            JLabel label = new JLabel(labels[i] + " : ");
+            JLabel value = new JLabel(values[i]);
+            label.setPreferredSize(new Dimension(80, 20));
+            infoPanel.add(label);
+            infoPanel.add(value);
+            mainPanel.add(infoPanel);
+        }
+
+        add(mainPanel, BorderLayout.CENTER);
+
+        // 메인으로 돌아가는 버튼
+        JButton mainButton = new JButton("메인으로");
+        mainButton.setBackground(new Color(65, 105, 225));
+        mainButton.setForeground(Color.BLACK);
+        mainButton.addActionListener(e -> {
+            dispose(); // 현재 창 닫기
+            new Main.NextScreen(username); // 메인 화면으로 돌아가기
+        });
+        add(mainButton, BorderLayout.SOUTH);
+
+        // 프레임 설정 마무리
+        setLocationRelativeTo(null); // 화면 중앙에 표시
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // 창을 닫으면 이 화면만 종료
+    }
+
+    // 데이터베이스에서 사용자 정보를 가져오는 메소드
+    private String getUserInfo() {
+        return userDAO.getUsername(username);
     }
 }
