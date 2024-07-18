@@ -32,7 +32,7 @@ public class NextScreen extends JFrame {
 
         JButton dateReservationBtn = createButton("영화별 예매", e -> new DateReservationScreen(username).setVisible(true));
         JButton theaterReservationBtn = createButton("상영관별 예매", e -> new TheaterReservationScreen().setVisible(true));
-        JButton myReservationBtn = createButton("예매 확인", e -> new MyReservationScreen().setVisible(true));
+        JButton myReservationBtn = createButton("예매 확인", e -> new MyReservationScreen(username).setVisible(true));
         JButton showInfoBtn = createButton("내 정보 보기", e -> new ShowInfoScreen(username).setVisible(true));
 
         buttonPanel.add(dateReservationBtn);
